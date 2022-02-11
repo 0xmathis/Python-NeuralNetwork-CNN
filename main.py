@@ -26,14 +26,14 @@ network.addLayer(CONV, **conv1)  # dim output : (176, 162)
 relu1 = {'typeReLU': 'max'}
 network.addLayer(ReLU, **relu1)  # dim output : (176, 162)
 
-# conv2 = {'kernelDim': 5, 'nbKernel': 5}
-# network.addLayer(CONV, **conv2)  # dim output : (172, 158)
-#
-# relu2 = {'typeReLU': 'max'}
-# network.addLayer(ReLU, **relu1)  # dim output : (172, 158)
-#
-# pool1 = {'typePooling': 'max', 'filterDim': 2}
-# network.addLayer(POOL, **pool1)  # dim output : (88, 81)
+conv2 = {'kernelDim': 5, 'nbKernel': 5}
+network.addLayer(CONV, **conv2)  # dim output : (172, 158)
+
+relu2 = {'typeReLU': 'max'}
+network.addLayer(ReLU, **relu2)  # dim output : (172, 158)
+
+pool1 = {'typePooling': 'max', 'filterDim': 2}
+network.addLayer(POOL, **pool1)  # dim output : (88, 81)
 
 output = network.feedForward([image])
 print(output[0].shape)
