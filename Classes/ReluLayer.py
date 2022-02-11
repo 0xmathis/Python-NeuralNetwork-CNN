@@ -13,8 +13,8 @@ STEP = 'step'
 class ReluLayer:
     def __init__(self, typeReLU: str):
         self.typeReLU: str = typeReLU
-        self.input_: list[Matrice] = []
-        self.output: list[Matrice] = []
+        self.inputs: list[Matrice] = []
+        self.outputs: list[Matrice] = []
 
         if self.typeReLU == MAX:
             self.activation = lambda x: max(0, x)
@@ -32,10 +32,10 @@ class ReluLayer:
     def __repr__(self):
         return f'ReLU {self.typeReLU}'
 
-    def feedForward(self, input_: list[Matrice]) -> list[Matrice]:
-        self.input_ = input_.copy()
-        self.output = [matrice.map(self.activation) for matrice in input_]
-        return self.output
+    def feedForward(self, inputs: list[Matrice]) -> list[Matrice]:
+        self.inputs = inputs.copy()
+        self.outputs = [matrice.map(self.activation) for matrice in inputs]
+        return self.outputs
 
     def backPropagation(self, outputGradients: list[Matrice], learningRate: float) -> list[Matrice]:
-        return [self.input_[i].map(self.d_activation_dx).hp(outputGradients[i]) for i in range(len(self.input_))]
+        return [self.inputs[i].map(self.d_activation_dx).hp(outputGradients[i]) for i in range(len(self.inputs))]

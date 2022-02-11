@@ -26,8 +26,8 @@ network.addLayer(CONV, **conv1)  # dim output : (176, 162)
 relu1 = {'typeReLU': 'max'}
 network.addLayer(ReLU, **relu1)  # dim output : (176, 162)
 
-conv2 = {'kernelDim': 5, 'nbKernel': 5}
-network.addLayer(CONV, **conv2)  # dim output : (172, 158)
+# conv2 = {'kernelDim': 5, 'nbKernel': 5}
+# network.addLayer(CONV, **conv2)  # dim output : (172, 158)
 #
 # relu2 = {'typeReLU': 'max'}
 # network.addLayer(ReLU, **relu1)  # dim output : (172, 158)
