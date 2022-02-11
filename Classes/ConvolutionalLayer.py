@@ -16,7 +16,7 @@ class ConvolutionalLayer:
         self.outputs: list[Matrice] = []  # il y a autant d'output que de biais
 
     def __repr__(self):
-        return f'CONV {self.nbKernel} {self.kernelDim}x{self.kernelDim}'
+        return f'CONV {self.nbKernel}kernels {self.kernelDim}x{self.kernelDim}'
 
     def feedForward(self, inputs: list[Matrice]) -> list[Matrice]:
         if not self.isFullInit:

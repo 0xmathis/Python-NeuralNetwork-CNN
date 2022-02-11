@@ -38,6 +38,7 @@ class CNN:
 
     def feedForward(self, data: list[Matrice]) -> list[Matrice]:
         for layer in self.network:
+            print(layer)
             data = layer.feedForward(data)
 
         return data

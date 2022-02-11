@@ -20,14 +20,14 @@ matrice = Matrice([[1, 2, 3, 4, 5],
 # print(image.shape)
 network = CNN()
 
-conv1 = {'kernelDim': 5, 'nbKernel': 10}
+conv1 = {'kernelDim': 5, 'nbKernel': 5}
 network.addLayer(CONV, **conv1)  # dim output : (176, 162)
 
-# relu1 = {'typeReLU': 'max'}
-# network.addLayer(ReLU, **relu1)  # dim output : (176, 162)
-#
-# conv2 = {'inputDepth': 1, 'kernelDim': 5, 'nbKernel': 10}
-# network.addLayer(CONV, **conv1)  # dim output : (172, 158)
+relu1 = {'typeReLU': 'max'}
+network.addLayer(ReLU, **relu1)  # dim output : (176, 162)
+
+conv2 = {'kernelDim': 5, 'nbKernel': 5}
+network.addLayer(CONV, **conv2)  # dim output : (172, 158)
 #
 # relu2 = {'typeReLU': 'max'}
 # network.addLayer(ReLU, **relu1)  # dim output : (172, 158)

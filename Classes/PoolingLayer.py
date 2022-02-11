@@ -18,6 +18,9 @@ class PoolingLayer:
         self.inputs = []
         self.outputs: list[Matrice] = []  # il y aura nbInputs outputs
 
+    def __repr__(self):
+        return f'POOL {self.typePooling} {self.filterDim}x{self.filterDim}'
+
     def feedForward(self, inputs: list[Matrice]) -> list[Matrice]:
         if not self.isFullInit:
             self.inputShape = inputs[0].shape

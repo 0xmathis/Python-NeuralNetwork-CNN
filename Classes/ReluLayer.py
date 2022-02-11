@@ -29,6 +29,9 @@ class ReluLayer:
             self.activation = lambda x: 1 if x > 0 else 0
             self.d_activation_dx = lambda y: 0
 
+    def __repr__(self):
+        return f'ReLU {self.typeReLU}'
+
     def feedForward(self, input_: list[Matrice]) -> list[Matrice]:
         self.input_ = input_.copy()
         self.output = [matrice.map(self.activation) for matrice in input_]
