@@ -1,7 +1,8 @@
+from Classes.Layer import Layer
 from Matrice import Matrice
 
 
-class FlatteningLayer:
+class FlatteningLayer(Layer):
     def __init__(self):
         self.inputShape = (-1, -1)
         self.outputShape = (-1, -1)

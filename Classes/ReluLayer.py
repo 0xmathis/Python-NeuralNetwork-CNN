@@ -2,6 +2,7 @@ from math import cosh, tanh
 
 from sympy import exp, N
 
+from Classes.Layer import Layer
 from Matrice import Matrice
 
 MAX = 'max'
@@ -10,7 +11,7 @@ TANH = 'tanh'
 STEP = 'step'
 
 
-class ReluLayer:
+class ReluLayer(Layer):
     def __init__(self, typeReLU: str):
         self.typeReLU: str = typeReLU
         self.inputs: list[Matrice] = []

@@ -1,7 +1,8 @@
+from Classes.Layer import Layer
 from Matrice import *
 
 
-class ConvolutionalLayer:
+class ConvolutionalLayer(Layer):
     def __init__(self, kernelDim: int, nbKernel: int):
         self.inputShape: tuple[int, int] = (-1, -1)
         self.inputDepth = -1

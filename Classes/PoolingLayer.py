@@ -1,10 +1,11 @@
+from Layer import Layer
 from Matrice import Matrice
 
 MAX = 'max'
 AVG = 'average'
 
 
-class PoolingLayer:
+class PoolingLayer(Layer):
     def __init__(self, typePooling: str, filterDim: int):
         if typePooling not in (MAX, AVG):
             raise ValueError
