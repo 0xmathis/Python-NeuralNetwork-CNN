@@ -16,7 +16,7 @@ class PoolingLayer(Layer):
         self.outputShape = (-1, -1)
         self.isFullInit = False
 
-        self.inputs = []
+        self.inputs: list[Matrice] = []
         self.outputs: list[Matrice] = []  # il y aura nbInputs outputs
 
     def __repr__(self):
@@ -29,7 +29,6 @@ class PoolingLayer(Layer):
             self.isFullInit = True
 
         self.inputs = inputs.copy()
-
         self.outputs = [self.pooling(matrice) for matrice in self.inputs]
 
         return self.outputs
@@ -42,13 +41,13 @@ class PoolingLayer(Layer):
                 subInput = input_.getSubMatrice((i * self.filterDim, j * self.filterDim), ((i + 1) * self.filterDim - 1, (j + 1) * self.filterDim - 1))
 
                 if self.typePooling == MAX:
-                    output[(i, j)] = max(subInput[(i, j)] for j in range(subInput.getColumns()) for i in range(subInput.getRows()))
+                    output[(i, j)] = max(subInput)
                 else:
                     output[(i, j)] = sum(subInput) / (subInput.getRows() * subInput.getColumns())
 
         return output
 
-    def backPropagation(self, outputGradients: list[Matrice], learningRate: int) -> list[Matrice]:
+    def backPropagation(self, outputGradients: list[Matrice], learningRate: float) -> list[Matrice]:
         return [self.antiPooling(self.inputs[k], self.outputs[k]).hp(outputGradients[k]) for k in range(len(outputGradients))]
 
     def antiPooling(self, input_: Matrice, output: Matrice) -> Matrice:  # ajouter le cas du avg pooling

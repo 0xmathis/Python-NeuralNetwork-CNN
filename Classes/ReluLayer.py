@@ -13,6 +13,9 @@ STEP = 'step'
 
 class ReluLayer(Layer):
     def __init__(self, typeReLU: str):
+        if typeReLU not in (MAX, SIGMOID, TANH, STEP):
+            raise ValueError
+
         self.typeReLU: str = typeReLU
         self.inputs: list[Matrice] = []
         self.outputs: list[Matrice] = []
