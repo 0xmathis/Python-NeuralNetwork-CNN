@@ -5,10 +5,10 @@ from Matrice import *
 class ConvolutionalLayer(Layer):
     def __init__(self, kernelDim: int, nbKernel: int):
         self.inputShape: tuple[int, int] = (-1, -1)
-        self.inputDepth = -1
+        self.outputShape: tuple[int, int] = (-1, -1)
+        self.inputDepth: int = -1
         self.kernelDim: int = kernelDim
         self.nbKernel: int = nbKernel
-        self.outputShape: tuple[int, int] = (-1, -1)
         self.isFullInit: bool = False
 
         self.kernels: list[list[Matrice]] = []

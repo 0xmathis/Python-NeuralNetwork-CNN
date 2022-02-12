@@ -9,5 +9,5 @@ class Layer:
         pass
 
     @abstractmethod
-    def backPropagation(self, outputGradients: list[Matrice]) -> list[Matrice]:
+    def backPropagation(self, outputGradients: list[Matrice], learningRate: float) -> list[Matrice]:
         pass
