@@ -41,7 +41,7 @@ class ConvolutionalLayer(Layer):
         return self.outputs
 
     def backPropagation(self, outputGradients: list[Matrice], learningRate: float) -> list[Matrice]:
-        kernelGradient: list[list[Matrice]] = [[Matrice.vide(self.kernelDim, 1) for _ in range(self.nbKernel)] for _ in range(self.inputDepth)]
+        kernelGradient: list[list[Matrice]] = [[Matrice.vide(1, 1) for _ in range(self.nbKernel)] for _ in range(self.inputDepth)]
         inputGradient: list[Matrice] = [Matrice.vide(*self.inputShape) for _ in range(self.inputDepth)]
 
         for i in range(self.nbKernel):
@@ -56,21 +56,23 @@ class ConvolutionalLayer(Layer):
 
         return inputGradient
 
-    def validCorrelation(self, input_: Matrice, kernel: Matrice) -> Matrice:
-        output = Matrice.vide(input_.getRows() - self.kernelDim + 1, input_.getColumns() - self.kernelDim + 1)
+    @staticmethod
+    def validCorrelation(input_: Matrice, kernel: Matrice) -> Matrice:
+        output = Matrice.vide(input_.getRows() - kernel.getRows() + 1, input_.getColumns() - kernel.getColumns() + 1)
 
         for i in range(output.getRows()):
             for j in range(output.getColumns()):
-                subInput = input_.getSubMatrice((i, j), (i + self.kernelDim - 1, j + self.kernelDim - 1))
+                subInput = input_.getSubMatrice((i, j), (i + kernel.getRows() - 1, j + kernel.getColumns() - 1))
                 output[(i, j)] = sum(subInput.hp(kernel))
 
         return output * (1 / sum(kernel))
 
-    def fullCorrelation(self, input_: Matrice, kernel: Matrice) -> Matrice:
-        output = Matrice.vide(self.inputShape[0] + self.kernelDim - 1, self.inputShape[1] + self.kernelDim - 1)
+    @staticmethod
+    def fullCorrelation(input_: Matrice, kernel: Matrice) -> Matrice:
+        output = Matrice.vide(input_.getRows() + kernel.getRows() - 1, input_.getColumns() + kernel.getColumns() - 1)
         inputExpand = input_.copy()
 
-        for _ in range(self.kernelDim - 1):
+        for _ in range(kernel.getRows() - 1):
             inputExpand = inputExpand.addNullRow(TOP)
             inputExpand = inputExpand.addNullRow(BOTTOM)
             inputExpand = inputExpand.addNullColumn(LEFT)
@@ -78,7 +80,7 @@ class ConvolutionalLayer(Layer):
 
         for i in range(output.getRows()):
             for j in range(output.getColumns()):
-                subInput = inputExpand.getSubMatrice((i, j), (i + self.kernelDim - 1, j + self.kernelDim - 1))
+                subInput = inputExpand.getSubMatrice((i, j), (i + kernel.getRows() - 1, j + kernel.getColumns() - 1))
                 output[(i, j)] = sum(subInput.hp(kernel))
 
         return output
