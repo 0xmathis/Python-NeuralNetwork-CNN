@@ -1,12 +1,11 @@
+from time import time
+
 from matplotlib.pyplot import imshow, show
 from numpy import array
-from time import time
 
 from Classes.CNN import CNN, CONV, POOL, ReLU
 from Classes.ImageData import ImageData
 from Matrice import Matrice
-
-# TODO : faire pooling
 
 inputShape = (5, 5)
 
@@ -35,7 +34,6 @@ network.addLayer(CONV, **conv2)  # dim output : (172, 158)
 
 relu2 = {'typeReLU': 'max'}
 network.addLayer(ReLU, **relu2)  # dim output : (172, 158)
-
 
 start = time()
 output = network.feedForward([image])
