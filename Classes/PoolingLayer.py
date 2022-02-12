@@ -46,3 +46,5 @@ class PoolingLayer:
                     output[(i, j)] = sum(subInput) / (subInput.getRows() * subInput.getColumns())
 
         return output
+
+    def backPropagation(self):

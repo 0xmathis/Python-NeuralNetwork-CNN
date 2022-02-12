@@ -6,8 +6,8 @@ class ReshapeLayer:
         self.inputShape = inputShape
         self.outputShape = outputShape
 
-    def feedFroward(self, input_: Matrice) -> Matrice:
-        return input_.reshape(self.outputShape)
+    def feedFroward(self, input_: list[Matrice]) -> list[Matrice]:
+        return list(map(lambda x: x.reshape(self.outputShape), input_))
 
-    def backPropagation(self, outputGradient: Matrice) -> Matrice:
-        return outputGradient.reshape(self.inputShape)
+    def backPropagation(self, outputGradient: list[Matrice]) -> list[Matrice]:
+        return list(map(lambda x: x.reshape(self.inputShape), outputGradient))
