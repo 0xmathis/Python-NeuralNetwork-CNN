@@ -33,7 +33,7 @@ class PoolingLayer:
 
         return self.outputs
 
-    def pooling(self, input_: Matrice):
+    def pooling(self, input_: Matrice) -> Matrice:
         output = Matrice.vide(input_.getRows() // self.filterDim, input_.getColumns() // self.filterDim)
 
         for i in range(output.getRows()):
