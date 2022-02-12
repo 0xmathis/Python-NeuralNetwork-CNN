@@ -47,4 +47,13 @@ class PoolingLayer:
 
         return output
 
-    def backPropagation(self):
+    def backPropagation(self, outputGradients: list[Matrice]) -> list[Matrice]:
+        inputGradients: list[Matrice] = []
+
+        for k in range(len(outputGradients)):
+            inputGradients += [self.antiPooling(self.inputs[k], self.outputs[k]).hp(outputGradients[k])]
+
+        return inputGradients
+
+    def antiPooling(self, input_: Matrice, output: Matrice) -> Matrice:
+        return Matrice([[1 if input_[(i, j)] == output[(i // self.filterDim, j // self.filterDim)] else 0 for j in range(self.inputShape[1])] for i in range(self.inputShape[0])])
