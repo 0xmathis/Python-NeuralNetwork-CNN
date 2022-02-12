@@ -1,7 +1,8 @@
 import cv2
 import keyboard
-from numpy import array
 from PIL import Image
+from numpy import array
+
 from Matrice import Matrice
 
 
