@@ -18,13 +18,16 @@ class ConvolutionalLayer:
     def __repr__(self):
         return f'CONV {self.nbKernel}kernels {self.kernelDim}x{self.kernelDim}'
 
+    def initFull(self, inputs: list[Matrice]) -> None:
+        self.inputShape = inputs[0].shape
+        self.inputDepth = len(inputs)
+        self.outputShape = (self.inputShape[0] - self.kernelDim + 1, self.inputShape[1] - self.kernelDim + 1)
+        self.kernels = [[Matrice.random(self.kernelDim, self.kernelDim, -3, 3, float) for _ in range(self.inputDepth)] for _ in range(self.nbKernel)]
+        self.biases: list[Matrice] = [Matrice.random(*self.outputShape, -1, 1, float) for _ in range(self.nbKernel)]
+
     def feedForward(self, inputs: list[Matrice]) -> list[Matrice]:
         if not self.isFullInit:
-            self.inputShape = inputs[0].shape
-            self.inputDepth = len(inputs)
-            self.outputShape = (self.inputShape[0] - self.kernelDim + 1, self.inputShape[1] - self.kernelDim + 1)
-            self.kernels = [[Matrice.random(self.kernelDim, self.kernelDim, -3, 3, float) for _ in range(self.inputDepth)] for _ in range(self.nbKernel)]
-            self.biases: list[Matrice] = [Matrice.random(*self.outputShape, -1, 1, float) for _ in range(self.nbKernel)]
+            self.initFull(inputs)
             self.isFullInit = True
 
         self.inputs = inputs.copy()
