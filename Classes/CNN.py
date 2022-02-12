@@ -1,12 +1,13 @@
 from typing import Union
+from time import time
 
-from Classes.FC import FC as FcLayer
 from Classes.ConvolutionalLayer import ConvolutionalLayer
+from Classes.FC import FC as FcLayer
 from Classes.LossLayer import LossLayer
-from Matrice import Matrice
 from Classes.PoolingLayer import PoolingLayer
 from Classes.ReluLayer import ReluLayer
 from Classes.ReshapeLayer import ReshapeLayer
+from Matrice import Matrice
 
 # Type de layer :
 CONV = 'conv'
@@ -38,7 +39,8 @@ class CNN:
 
     def feedForward(self, data: list[Matrice]) -> list[Matrice]:
         for layer in self.network:
-            print(layer)
+            start = time()
             data = layer.feedForward(data)
+            print(layer, time() - start)
 
         return data

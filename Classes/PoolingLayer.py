@@ -25,6 +25,7 @@ class PoolingLayer:
         if not self.isFullInit:
             self.inputShape = inputs[0].shape
             self.outputShape = (self.inputShape[0] // self.filterDim, self.inputShape[1] // self.filterDim)
+            self.isFullInit = True
 
         self.inputs = inputs.copy()
 
