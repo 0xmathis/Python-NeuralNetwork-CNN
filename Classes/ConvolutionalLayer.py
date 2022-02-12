@@ -73,8 +73,6 @@ class ConvolutionalLayer(Layer):
         for _ in range(self.kernelDim - 1):
             inputExpand = inputExpand.addNullRow(TOP)
             inputExpand = inputExpand.addNullRow(BOTTOM)
-
-        for _ in range(self.kernelDim - 1):
             inputExpand = inputExpand.addNullColumn(LEFT)
             inputExpand = inputExpand.addNullColumn(RIGHT)
 
