@@ -1,9 +1,6 @@
 from time import time
 
-from matplotlib.pyplot import imshow, show
-from numpy import array
-
-from Classes.CNN import CNN, CONV, POOL, ReLU
+from Classes.CNN import CNN, CONV, POOL, ReLU, FLAT
 from Classes.ImageData import ImageData
 from Matrice import Matrice
 
@@ -32,8 +29,7 @@ network.addLayer(POOL, **pool1)  # dim output : (88, 81)
 conv2 = {'kernelDim': 3, 'nbKernel': 5}
 network.addLayer(CONV, **conv2)  # dim output : (172, 158)
 
-relu2 = {'typeReLU': 'max'}
-network.addLayer(ReLU, **relu2)  # dim output : (172, 158)
+network.addLayer(FLAT)
 
 start = time()
 output = network.feedForward([image])
@@ -45,11 +41,11 @@ print(time() - start)
 
 # print(output[0].shape)
 #
-inputArray = array(image.toList(), float)
-imshow(inputArray)
-show()
-
-for i in range(len(output)):
-    outputArray = array(output[i].toList(), float)
-    imshow(outputArray)
-    show()
+# inputArray = array(image.toList(), float)
+# imshow(inputArray)
+# show()
+#
+# for i in range(len(output)):
+#     outputArray = array(output[i].toList(), float)
+#     imshow(outputArray)
+#     show()
