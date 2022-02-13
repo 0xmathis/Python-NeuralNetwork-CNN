@@ -58,9 +58,5 @@ class FcLayer(Layer):
         :param input_: matrice de shape (n * r * c, 1)
         :return: list de n matrices de shape (r, c)
         """
-        pass
 
-
-liste = [Matrice([[1, 2, 3], [4, 5, 6]]).toVector(), Matrice([[7, 8, 9], [10, 11, 12]]).toVector()]
-reshapedListe = FcLayer.reshapeList(liste)
-print(reshapedListe)
+        return [input_.getSubMatrice((n * self.inputShape[1], 0), ((n + 1) * self.inputShape[1] - 1, 0)) for n in range(self.inputShape[0])]
