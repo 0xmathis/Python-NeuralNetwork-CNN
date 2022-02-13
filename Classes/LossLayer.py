@@ -35,9 +35,9 @@ class LossLayer:
         return ((1 - targets) / (1 - outputs) - targets / outputs) / targets.getRows()
 
     @staticmethod
-    def MSE(outputs: Matrice, targets: Matrice):
+    def MSE(outputs: Matrice, targets: Matrice) -> float:
         return (targets - outputs).ps(0, 0) / targets.getRows()
 
     @staticmethod
-    def MSEprime(outputs: Matrice, targets: Matrice):
+    def MSEprime(outputs: Matrice, targets: Matrice) -> Matrice:
         return (outputs - targets) * 2 / targets.getRows()
