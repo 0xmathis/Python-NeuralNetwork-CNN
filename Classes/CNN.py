@@ -9,33 +9,33 @@ from Classes.PoolingLayer import PoolingLayer
 from Classes.ReluLayer import ReluLayer
 from Matrice import Matrice
 
-# Type de layer :
-CONV: str = 'conv'
-POOL: str = 'pool'
-ReLU: str = 'relu'
-FC: str = 'fc'
-FLAT: str = 'flat'
-LOSS: str = 'loss'
-LAYERS = {
-    CONV: ConvolutionalLayer,
-    POOL: PoolingLayer,
-    ReLU: ReluLayer,
-    FC: FcLayer,
-    FLAT: FlatteningLayer,
-    LOSS: LossLayer
-    }
-
 
 class CNN:
+    # Type de layer :
+    CONV: str = 'conv'
+    POOL: str = 'pool'
+    ReLU: str = 'relu'
+    FC: str = 'fc'
+    FLAT: str = 'flat'
+    LOSS: str = 'loss'
+    LAYERS = {
+        CONV: ConvolutionalLayer,
+        POOL: PoolingLayer,
+        ReLU: ReluLayer,
+        FC: FcLayer,
+        FLAT: FlatteningLayer,
+        LOSS: LossLayer
+        }
+
     def __init__(self, learningRate: float):
         self.network: list[Union[Layer, LossLayer]] = []
         self.learningRate = learningRate
 
     def addLayer(self, layer: str, **args) -> None:
-        if layer not in LAYERS.keys():
+        if layer not in CNN.LAYERS.keys():
             raise ValueError
 
-        self.network += [LAYERS[layer](**args)]
+        self.network += [CNN.LAYERS[layer](**args)]
 
     def feedForward(self, data: list[Matrice]) -> list[Matrice]:
         for layer in self.network[:-1]:

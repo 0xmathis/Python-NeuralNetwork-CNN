@@ -1,4 +1,4 @@
-from Classes.CNN import CNN, CONV, ReLU, POOL, FLAT, FC, LOSS
+from Classes.CNN import CNN
 from Classes.ImageData import ImageData
 from Matrice import Matrice
 
@@ -11,26 +11,16 @@ matrice = Matrice.random(15, 15, -5, 5, float)
 # print(image.shape)
 network = CNN(0.5)
 
-conv1 = {'kernelDim': 3, 'nbKernel': 5}
-network.addLayer(CONV, **conv1)  # dim output : (176, 162)
+network.addLayer(CNN.CONV, **{'kernelDim': 3, 'nbKernel': 5})  # dim output : (176, 162)
+network.addLayer(CNN.ReLU, **{'typeReLU': 'max'})  # dim output : (176, 162)
+network.addLayer(CNN.POOL, **{'typePooling': 'max', 'filterDim': 3})  # dim output : (88, 81)
+network.addLayer(CNN.FLAT)
+network.addLayer(CNN.FC, **{'outputShape': (5, 1)})
+network.addLayer(CNN.LOSS, **{'typeLoss': 'bce'})
 
-relu1 = {'typeReLU': 'max'}
-network.addLayer(ReLU, **relu1)  # dim output : (176, 162)
-
-pool1 = {'typePooling': 'max', 'filterDim': 3}
-network.addLayer(POOL, **pool1)  # dim output : (88, 81)
-
-network.addLayer(FLAT)
-
-fc1 = {'outputShape': (5, 1)}
-network.addLayer(FC, **fc1)
-
-loss1 = {'typeLoss': 'bce'}
-network.addLayer(LOSS, **loss1)
-#
 # start = time()
 output = network.feedForward([matrice])
-print(output)
+print(output[0])
 network.backPropagation(output[0], Matrice.random(5, 1, -3, 3, float))
 # print(time() - start)
 
