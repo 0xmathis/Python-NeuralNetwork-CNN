@@ -19,7 +19,7 @@ class FcLayer(Layer):
         self.weights: Matrice = Matrice.random(self.outputShape[0], self.inputShape[0], -1, 1, float)
         self.biases: Matrice = Matrice.random(self.outputShape[0], 1, -1, 1, float)
 
-    def feedForward(self, inputs: list[Matrice]) -> Matrice:
+    def feedForward(self, inputs: list[Matrice]) -> list[Matrice]:
         if not self.isFullInit:
             self.fullInit(inputs)
             self.isFullInit = True
@@ -27,14 +27,14 @@ class FcLayer(Layer):
         self.input = self.reshapeList(inputs)
         self.output = self.weights * self.input + self.biases
 
-        return self.output
+        return [self.output]
 
-    def backPropagation(self, outputGradients: Matrice, learningRate: float) -> list[Matrice]:
-        weightsGradient = outputGradients * self.input.T
+    def backPropagation(self, outputGradients: list[Matrice], learningRate: float) -> list[Matrice]:
+        weightsGradient = outputGradients[0] * self.input.T  # outputGradients ne contient que 1 valeur
         self.weights -= learningRate * weightsGradient
-        self.biases -= learningRate * outputGradients
+        self.biases -= learningRate * outputGradients[0]
 
-        return self.reshapeMatrice(self.weights.T * outputGradients)  # inputGradients
+        return self.reshapeMatrice(self.weights.T * outputGradients[0])  # inputGradients
 
     @staticmethod
     def reshapeList(inputs: list[Matrice]) -> Matrice:

@@ -7,7 +7,7 @@ MSE = 'mse'
 
 
 class LossLayer:
-    def __init__(self, typeLoss: str, targets: Matrice):
+    def __init__(self, typeLoss: str):
         if typeLoss not in (BCE, MSE):
             raise ValueError
 
@@ -19,6 +19,12 @@ class LossLayer:
         else:
             self.loss = self.MSE
             self.lossPrime = self.MSEprime
+
+    def getError(self, outputs: list[Matrice], targets: Matrice) -> float:
+        return self.loss(outputs[0], targets)  # outputs ne contient que 1 valeur
+
+    def getGradient(self, outputs: Matrice, targets: Matrice) -> list[Matrice]:
+        return [self.lossPrime(outputs, targets)]
 
     @staticmethod
     def BCE(outputs: Matrice, targets: Matrice) -> float:

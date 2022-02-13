@@ -21,8 +21,3 @@ class FlatteningLayer(Layer):
 
     def backPropagation(self, outputGradients: list[Matrice], learningRate: float) -> list[Matrice]:
         return list(map(lambda x: x.reshape(self.inputShape), outputGradients))
-
-
-flat = FlatteningLayer()
-inputs = [Matrice([[1, 2], [3, 4]]), Matrice([[5, 6], [7, 8]])]
-print(flat.feedForward(inputs))

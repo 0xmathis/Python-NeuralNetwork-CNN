@@ -42,3 +42,9 @@ class CNN:
             data = layer.feedForward(data)
 
         return data
+
+    def backPropagation(self, outputs: Matrice, targets: Matrice):
+        gradient: list[Matrice] = self.network[-1].getGradient(outputs, targets)
+
+        for layer in self.network[-2::-1]:
+            gradient = layer.backPropagation(gradient, self.learningRate)
