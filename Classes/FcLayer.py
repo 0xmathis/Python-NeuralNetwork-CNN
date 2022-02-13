@@ -1,4 +1,4 @@
-from Layer import Layer
+from Classes.Layer import Layer
 from Matrice import Matrice
 
 
@@ -16,8 +16,8 @@ class FcLayer(Layer):
     def fullInit(self, inputs: list[Matrice]):
         self.inputShape: tuple[int, int] = (len(inputs), inputs[0].getRows() * inputs[0].getColumns())
         self.inputFlatShape: tuple[int, int] = (len(inputs) * inputs[0].getRows() * inputs[0].getColumns(), 1)
-        self.weights: Matrice = Matrice.random(self.outputShape[0], self.inputShape[0], -1, 1, float)
         self.biases: Matrice = Matrice.random(self.outputShape[0], 1, -1, 1, float)
+        self.weights: Matrice = Matrice.random(self.outputShape[0], self.inputFlatShape[0], -1, 1, float)
 
     def feedForward(self, inputs: list[Matrice]) -> list[Matrice]:
         if not self.isFullInit:
@@ -25,6 +25,7 @@ class FcLayer(Layer):
             self.isFullInit = True
 
         self.input = self.reshapeList(inputs)
+        # print(self.weights.shape)
         self.output = self.weights * self.input + self.biases
 
         return [self.output]
@@ -38,7 +39,7 @@ class FcLayer(Layer):
 
     def reshapeList(self, inputs: list[Matrice]) -> Matrice:
         """
-        :param inputs: list de n matrices de shape (r, c)
+        :param inputs: list de n matrices de shape (r * c, 1)
         :return: matrice de shape (n * r * c, 1)
         """
         output = Matrice.vide(*self.inputFlatShape)

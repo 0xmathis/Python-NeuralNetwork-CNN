@@ -1,4 +1,4 @@
-from Layer import Layer
+from Classes.Layer import Layer
 from Matrice import Matrice
 
 MAX = 'max'
