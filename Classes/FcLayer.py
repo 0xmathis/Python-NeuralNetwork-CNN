@@ -7,8 +7,8 @@ class FcLayer(Layer):
         self.inputShape: tuple[int, int] = (-1, -1)
         self.inputFlatShape: tuple[int, int] = (-1, -1)
         self.outputShape: tuple[int, int] = outputShape
-        self.weights: Matrice = Matrice.vide(1, 1)
         self.biases: Matrice = Matrice.vide(1, 1)
+        self.weights: Matrice = Matrice.vide(1, 1)
         self.input: Matrice = Matrice.vide(1, 1)
         self.output: Matrice = Matrice.vide(1, 1)
         self.isFullInit = False
@@ -31,23 +31,20 @@ class FcLayer(Layer):
 
     def backPropagation(self, outputGradients: list[Matrice], learningRate: float) -> list[Matrice]:
         weightsGradient = outputGradients[0] * self.input.T  # outputGradients ne contient que 1 valeur
-        self.weights -= learningRate * weightsGradient
         self.biases -= learningRate * outputGradients[0]
+        self.weights -= learningRate * weightsGradient
 
         return self.reshapeMatrice(self.weights.T * outputGradients[0])  # inputGradients
 
-    @staticmethod
-    def reshapeList(inputs: list[Matrice]) -> Matrice:
+    def reshapeList(self, inputs: list[Matrice]) -> Matrice:
         """
         :param inputs: list de n matrices de shape (r, c)
         :return: matrice de shape (n * r * c, 1)
         """
-        output = Matrice.vide(len(inputs) * inputs[0].getRows() * inputs[0].getColumns(), 1)
+        output = Matrice.vide(*self.inputFlatShape)
         k = 0
         for matrice in inputs:
-            # print(matrice)
             for i in range(matrice.getRows()):
-                # print(i)
                 output[k, 0] = matrice[i, 0]
                 k += 1
 
