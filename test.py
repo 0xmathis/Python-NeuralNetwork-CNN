@@ -14,6 +14,7 @@ arrayTest = array(
 
 print(arrayTest)
 print(arrayTest.reshape((3*3*2)))
+print(arrayTest.reshape((3*3*2)).reshape((2, 3, 3)))
 
 # arrayTest2 = random.randint(-5, 5, (3, 3, 3))
 # print(arrayTest2)

@@ -1,5 +1,5 @@
 from Classes.ConvolutionalLayer import ConvolutionalLayer
-from Classes.FC import FC as FcLayer
+from Classes.FcLayer import FcLayer
 from Classes.FlatteningLayer import FlatteningLayer
 from Classes.Layer import Layer
 from Classes.PoolingLayer import PoolingLayer
@@ -7,11 +7,11 @@ from Classes.ReluLayer import ReluLayer
 from Matrice import Matrice
 
 # Type de layer :
-CONV = 'conv'
-POOL = 'pool'
-ReLU = 'relu'
-FC = 'fc'
-FLAT = 'flat'
+CONV: str = 'conv'
+POOL: str = 'pool'
+ReLU: str = 'relu'
+FC: str = 'fc'
+FLAT: str = 'flat'
 LAYERS = {
     CONV: ConvolutionalLayer,
     POOL: PoolingLayer,
