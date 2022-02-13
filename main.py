@@ -1,4 +1,4 @@
-from Classes.CNN import CNN, CONV, ReLU, POOL, FLAT
+from Classes.CNN import CNN, CONV, ReLU, POOL, FLAT, FC, LOSS
 from Classes.ImageData import ImageData
 from Matrice import Matrice
 
@@ -22,15 +22,16 @@ network.addLayer(POOL, **pool1)  # dim output : (88, 81)
 
 network.addLayer(FLAT)
 
-# fc1 = {'outputShape': (5, 1)}
-# network.addLayer(FC, **fc1)
-#
-# loss1 = {'typeLoss': 'bce'}
-# network.addLayer(LOSS, **loss1)
+fc1 = {'outputShape': (5, 1)}
+network.addLayer(FC, **fc1)
+
+loss1 = {'typeLoss': 'bce'}
+network.addLayer(LOSS, **loss1)
 #
 # start = time()
-output = network.feedForward([matrice.toVector()])
+output = network.feedForward([matrice])
 print(output)
+network.backPropagation(output[0], Matrice.random(5, 1, -3, 3, float))
 # print(time() - start)
 
 # start = time()

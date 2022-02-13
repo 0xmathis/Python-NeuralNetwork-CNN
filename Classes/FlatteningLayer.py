@@ -9,7 +9,7 @@ class FlatteningLayer(Layer):
         self.isFullInit = False
 
     def __repr__(self):
-        return 'FLATTENING'
+        return 'FLAT'
 
     def feedForward(self, inputs: list[Matrice]) -> list[Matrice]:
         if not self.isFullInit:

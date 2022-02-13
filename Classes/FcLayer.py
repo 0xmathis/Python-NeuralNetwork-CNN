@@ -13,6 +13,9 @@ class FcLayer(Layer):
         self.output: Matrice = Matrice.vide(1, 1)
         self.isFullInit = False
 
+    def __repr__(self):
+        return f'FC {self.outputShape[0]} outputs'
+
     def fullInit(self, inputs: list[Matrice]):
         self.inputShape: tuple[int, int] = (len(inputs), inputs[0].getRows() * inputs[0].getColumns())
         self.inputFlatShape: tuple[int, int] = (len(inputs) * inputs[0].getRows() * inputs[0].getColumns(), 1)
@@ -25,7 +28,6 @@ class FcLayer(Layer):
             self.isFullInit = True
 
         self.input = self.reshapeList(inputs)
-        # print(self.weights.shape)
         self.output = self.weights * self.input + self.biases
 
         return [self.output]

@@ -48,4 +48,5 @@ class CNN:
         gradient: list[Matrice] = self.network[-1].getGradient(outputs, targets)
 
         for layer in self.network[-2::-1]:
+            print(layer)
             gradient = layer.backPropagation(gradient, self.learningRate)

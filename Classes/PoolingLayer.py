@@ -47,9 +47,6 @@ class PoolingLayer(Layer):
 
         return output
 
-    def backPropagation(self, outputGradients: list[Matrice], learningRate: float) -> list[Matrice]:
-        return [self.antiPooling(self.inputs[k], self.outputs[k]).hp(outputGradients[k]) for k in range(len(outputGradients))]
-
     def antiPooling(self, input_: Matrice, output: Matrice) -> Matrice:  # ajouter le cas du avg pooling
         antiOutput = []
 
@@ -70,3 +67,6 @@ class PoolingLayer(Layer):
             antiOutput += [subList]
 
         return Matrice(antiOutput)
+
+    def backPropagation(self, outputGradients: list[Matrice], learningRate: float) -> list[Matrice]:
+        return [self.antiPooling(self.inputs[k], self.outputs[k].hp(outputGradients[k])) for k in range(len(outputGradients))]

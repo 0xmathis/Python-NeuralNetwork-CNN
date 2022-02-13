@@ -38,6 +38,7 @@ class ReluLayer(Layer):
     def feedForward(self, inputs: list[Matrice]) -> list[Matrice]:
         self.inputs = inputs.copy()
         self.outputs = [matrice.map(self.activation) for matrice in inputs]
+
         return self.outputs
 
     def backPropagation(self, outputGradients: list[Matrice], learningRate: float) -> list[Matrice]:
