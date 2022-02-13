@@ -22,8 +22,9 @@ LAYERS = {
 
 
 class CNN:
-    def __init__(self):
+    def __init__(self, learningRate: float):
         self.network: list[Layer] = []
+        self.learningRate = learningRate
 
     def addLayer(self, layer: str, **args) -> None:
         if layer not in LAYERS.keys():
