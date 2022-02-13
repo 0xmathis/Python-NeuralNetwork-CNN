@@ -1,5 +1,4 @@
 from math import cosh, tanh
-
 from sympy import exp, N
 
 from Classes.Layer import Layer
@@ -22,16 +21,16 @@ class ReluLayer(Layer):
 
         if self.typeReLU == MAX:
             self.activation = lambda x: max(0, x)
-            self.d_activation_dx = lambda y: 1 if y > 0 else 0
+            self.activationPrime = lambda y: 1 if y > 0 else 0
         elif self.typeReLU == SIGMOID:
             self.activation = lambda x: N(1 / (1 + exp(-x)))
-            self.d_activation_dx = lambda y: N(self.activation(y) * (1 - self.activation(y)))
+            self.activationPrime = lambda y: N(self.activation(y) * (1 - self.activation(y)))
         elif self.typeReLU == TANH:
             self.activation = lambda x: tanh(x)
-            self.d_activation_dx = lambda y: 1 / cosh(y) ** 2
+            self.activationPrime = lambda y: 1 / cosh(y) ** 2
         else:
             self.activation = lambda x: 1 if x > 0 else 0
-            self.d_activation_dx = lambda y: 0
+            self.activationPrime = lambda y: 0
 
     def __repr__(self):
         return f'ReLU {self.typeReLU}'
@@ -42,4 +41,4 @@ class ReluLayer(Layer):
         return self.outputs
 
     def backPropagation(self, outputGradients: list[Matrice], learningRate: float) -> list[Matrice]:
-        return [self.inputs[i].map(self.d_activation_dx).hp(outputGradients[i]) for i in range(len(self.inputs))]
+        return [self.inputs[i].map(self.activationPrime).hp(outputGradients[i]) for i in range(len(self.inputs))]
