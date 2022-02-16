@@ -1,3 +1,4 @@
+from time import time
 from typing import Union
 
 from Classes.ConvolutionalLayer import ConvolutionalLayer
@@ -8,6 +9,7 @@ from Classes.LossLayer import LossLayer
 from Classes.PoolingLayer import PoolingLayer
 from Classes.ReluLayer import ReluLayer
 from Matrice import Matrice
+from Utile import from_secondes
 
 
 class CNN:
@@ -37,16 +39,33 @@ class CNN:
 
         self.network += [CNN.LAYERS[layer](**args)]
 
-    def feedForward(self, data: list[Matrice]) -> list[Matrice]:
-        for layer in self.network[:-1]:
-            print(layer)
-            data = layer.feedForward(data)
+    def feedForward(self, input_: Matrice) -> Matrice:
+        print('FF', end=' ')
+        data: list[Matrice] = [input_]
 
-        return data
+        for layer in self.network[:-1]:
+            print(layer, end=' ')
+            data = layer.feedForward(data)
+        print()
+
+        return data[0]
 
     def backPropagation(self, outputs: Matrice, targets: Matrice):
+        print('BP', end=' ')
         gradient: list[Matrice] = self.network[-1].getGradient(outputs, targets)
 
         for layer in self.network[-2::-1]:
-            print(layer)
+            print(layer, end=' ')
             gradient = layer.backPropagation(gradient, self.learningRate)
+
+    def trainFromExternalData(self, input: Matrice, target: Matrice, iteration: int) -> float:
+        start: float = time()
+
+        output: Matrice = self.feedForward(input)
+        print(time() - start)
+        self.backPropagation(output, target)
+
+        end: float = time()
+
+        print(f'{iteration} :', from_secondes(end - start))
+        return end - start

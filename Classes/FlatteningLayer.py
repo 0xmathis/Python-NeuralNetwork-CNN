@@ -12,7 +12,6 @@ class FlatteningLayer(Layer):
         return 'FLAT'
 
     def feedForward(self, inputs: list[Matrice]) -> list[Matrice]:
-        print(len(inputs))
         if not self.isFullInit:
             self.inputShape = inputs[0].shape
             self.outputShape = (self.inputShape[0] * self.inputShape[1], 1)
