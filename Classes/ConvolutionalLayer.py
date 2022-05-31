@@ -24,7 +24,17 @@ class ConvolutionalLayer(Layer):
         self.inputDepth = len(inputs)
         self.outputShape = (self.inputShape[0] - self.kernelDim + 1, self.inputShape[1] - self.kernelDim + 1)
         self.kernels = [[Matrice.random(self.kernelDim, self.kernelDim, -3, 3, float) for _ in range(self.inputDepth)] for _ in range(self.nbKernel)]
+        # self.kernels = [[Matrice.random(self.kernelDim, self.kernelDim, 0, 5, int) for _ in range(self.inputDepth)] for _ in range(self.nbKernel)]
         self.biases: list[Matrice] = [Matrice.random(self.outputShape[0], self.outputShape[1], -1, 1, float) for _ in range(self.nbKernel)]
+        # self.biases: list[Matrice] = [Matrice.random(self.outputShape[0], self.outputShape[1], 0, 5, int) for _ in range(self.nbKernel)]
+        # self.biases: list[Matrice] = [Matrice.full(self.outputShape[0], self.outputShape[1], 0) for _ in range(self.nbKernel)]
+        # print('kernels:', len(self.kernels), len(self.kernels[0]), self.kernelDim, self.kernelDim, '\n')
+        # for i in range(len(self.kernels)):
+        #     for j in range(len(self.kernels[i])):
+        #         print(i, j, '\n', self.kernels[i][j])
+        # print('biases:', len(self.biases), 1, *self.outputShape, '\n')
+        # for i in range(len(self.biases)):
+        #     print(i, '\n', self.biases[i])
 
     def feedForward(self, inputs: list[Matrice]) -> list[Matrice]:
         if not self.isFullInit:
@@ -89,3 +99,13 @@ class ConvolutionalLayer(Layer):
     def rotation180Matrice(matrice: Matrice) -> Matrice:
         rotMatrice = Matrice([[1 if (i + j == matrice.getRows() - 1) else 0 for j in range(matrice.getColumns())] for i in range(matrice.getRows())])
         return rotMatrice * matrice * rotMatrice
+
+
+conv = ConvolutionalLayer(kernelDim=2, nbKernel=2)
+
+input_ = [Matrice.random(150, 150, 0, 5, int) for _ in range(3)]
+from time import time
+
+start = time()
+print('output:\n', conv.feedForward(input_))
+print(time() - start)
